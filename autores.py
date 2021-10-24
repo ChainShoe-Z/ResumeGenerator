@@ -28,8 +28,8 @@ e3 = tk.Entry(window, show = None, width=50)#display as plaintext
 l3.pack()
 e3.pack()
 
-# 第5步，定义两个触发事件时的函数insert_point和insert_end（注意：因为Python的执行顺序是从上往下，所以函数一定要放在按钮的上面）
-def insert_point(): # 在鼠标焦点处插入输入内容
+# define a callback function, only called whne button is pressed
+def insert_point():
     global var1 #set the input to global, to use them in later modification
     var1 = e.get()
     global var2 
@@ -41,12 +41,12 @@ def insert_point(): # 在鼠标焦点处插入输入内容
     t.insert('insert', var3)
 
  
-# 第6步，创建并放置两个按钮分别触发两种情况
-b1 = tk.Button(window, text='MODIFY', width=10, height=2, command=insert_point)
+# create a button to generate  the resume
+b1 = tk.Button(window, text='GENERATE', width=10, height=2, command=insert_point) #call insert_point
 b1.pack()
 
  
-# 第7步，创建并放置一个多行文本框text用以显示，指定height=3为文本框是三个字符高度
+# creat and set a multiline text box for testing.
 t = tk.Text(window, height=3)
 t.pack()
 window.mainloop()
@@ -102,7 +102,7 @@ pdf_lst = [os.path.join(target_path, filename) for filename in pdf_lst]
 
 file_merger = PdfFileMerger()
 for pdf in pdf_lst:
-    file_merger.append(pdf)     # 合并pdf文件
+    file_merger.append(pdf)     # merge and generate pdf file
 
 file_merger.write("D:\programming\pyFiles/CV_ChengxuZhang.pdf")
 
