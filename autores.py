@@ -5,6 +5,11 @@ import docx
 import tkinter as tk
 import os
 from PyPDF2 import PdfFileMerger
+import sys
+import shutil
+
+
+
 
 #set a TK GUI 
 window = tk.Tk()
@@ -39,6 +44,7 @@ def insert_point():
     t.insert('insert', var1)
     t.insert('insert', var2)
     t.insert('insert', var3)
+    window.destroy() #close the window when the button is pressed
 
  
 # create a button to generate  the resume
@@ -89,13 +95,20 @@ doc.paragraphs[10].text = zipcode
 doc.paragraphs[14].runs[6].text = var1
 doc.paragraphs[14].runs[10].text = var3 + '.'
 
+def move_file(old_path, new_path, file_name):
+    src = os.path.join(old_path, file_name)
+    dst = os.path.join(new_path, file_name)
+    shutil.move(src,dst)
+
+
 filename = var1 + 'Cov' +'.docx'
 fPDF = var1 + 'Cov' + '.pdf'
 doc.save(filename)
 
-convert(filename, fPDF) #This will convert the excel file to pdf format, and save it as "this PC-->documents"
+convert(filename, fPDF) #This will convert the excel file to pdf format, and save it to "this PC-->documents"
+move_file("C:/Users/89587/OneDrive/Documents", r"D:\programming\pyFiles", fPDF) #move the pdf file from Documents to the current folder
 
-
+#merge the resume, coverLetter, and transcript together
 target_path = 'D:\programming\pyFiles'
 pdf_lst = [f for f in os.listdir(target_path) if f.endswith('.pdf')]
 pdf_lst = [os.path.join(target_path, filename) for filename in pdf_lst]
@@ -105,6 +118,10 @@ for pdf in pdf_lst:
     file_merger.append(pdf)     # merge and generate pdf file
 
 file_merger.write("D:\programming\pyFiles/CV_ChengxuZhang.pdf")
+
+#remove files
+os.remove(filename)
+os.remove(fPDF)
 
 
 
