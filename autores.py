@@ -7,7 +7,11 @@ import os
 from PyPDF2 import PdfFileMerger
 import sys
 import shutil
+from datetime import  date
 
+today = date.today()
+d2 = today.strftime("%B %d, %Y")
+print(d2)
 
 
 
@@ -79,21 +83,26 @@ print(zipcode)
 doc = docx.Document('cov.docx')
 
 #modify here
+
+#modify date
+d2 = today.strftime("%B %d, %Y")
+doc.paragraphs[3].text = d2
+
 #modify company name
-doc.paragraphs[7].text = var1
+doc.paragraphs[5].text = var1
 
 #modify street
-doc.paragraphs[8].text = street
+doc.paragraphs[6].text = street
 
 #modify province
-doc.paragraphs[9].text = prov
+doc.paragraphs[7].text = prov
 
 #modify zip code
-doc.paragraphs[10].text = zipcode
+doc.paragraphs[8].text = zipcode
 
 #modify content in paragraph
-doc.paragraphs[14].runs[6].text = var1
-doc.paragraphs[14].runs[10].text = var3 + '.'
+doc.paragraphs[12].runs[6].text = var1
+doc.paragraphs[12].runs[10].text = var3 + '.'
 
 def move_file(old_path, new_path, file_name):
     src = os.path.join(old_path, file_name)
